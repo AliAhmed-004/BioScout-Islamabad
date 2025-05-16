@@ -25,7 +25,7 @@ class UserModel {
       name: name ?? 'Observer $id',
       avatarUrl: avatarUrl ?? 'https://i.pravatar.cc/150?u=$id',
       postCount: postCount,
-      badges: badges,
+      badges: List.from(badges),
     );
   }
 
