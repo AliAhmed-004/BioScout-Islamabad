@@ -1,11 +1,15 @@
+import 'package:bioscout/models/post_model.dart';
 import 'package:bioscout/pages/home_page.dart';
 import 'package:bioscout/providers/post_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 import 'providers/user_provider.dart';
 
 void main() {
+  Hive.registerAdapter(PostModelAdapter());
+
   runApp(
     MultiProvider(
       providers: [

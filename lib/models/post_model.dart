@@ -1,14 +1,35 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hive/hive.dart';
 
-class PostModel {
-  final String id; // Firestore doc ID
+part 'post_model.g.dart';
+
+@HiveType(typeId: 0)
+class PostModel extends HiveObject {
+  @HiveField(0)
+  final String id;
+
+  @HiveField(1)
   final String? speciesName;
+
+  @HiveField(2)
   final bool aiSuggested;
+
+  @HiveField(3)
   final DateTime dateObserved;
+
+  @HiveField(4)
   final String location;
+
+  @HiveField(5)
   final String imageUrl;
+
+  @HiveField(6)
   final String notes;
+
+  @HiveField(7)
   final DateTime timestamp;
+
+  @HiveField(8)
   final String userId;
 
   PostModel({
