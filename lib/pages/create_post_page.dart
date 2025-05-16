@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:bioscout/secrets.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import '../ai stuff/ai_helper.dart';
 import '../models/post_model.dart';
 import '../providers/post_provider.dart';
 import '../providers/user_provider.dart';
@@ -22,6 +24,38 @@ class _CreatePostPageState extends State<CreatePostPage> {
 
   File? _selectedImage;
   final ImagePicker _picker = ImagePicker();
+
+  final AIHelper _aiHelper = AIHelper(geminiApi);
+
+  Future<void> runAISuggestion() async {
+    if (_selectedImage == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please select an image first.")),
+      );
+      return;
+    }
+
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text("Analyzing image...")));
+
+    try {
+      final result = await _aiHelper.analyzeImage(_selectedImage!);
+      setState(() {
+        speciesController.text = result['species'] ?? '';
+        notesController.text = result['notes'] ?? '';
+        aiSuggested = true;
+      });
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("AI suggestion applied!")));
+    } catch (e) {
+      print("AI error: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Failed to get AI suggestion.")),
+      );
+    }
+  }
 
   Future<void> _pickImage() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
@@ -93,6 +127,11 @@ class _CreatePostPageState extends State<CreatePostPage> {
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Image.file(_selectedImage!, height: 200),
               ),
+            ElevatedButton.icon(
+              onPressed: runAISuggestion,
+              icon: const Icon(Icons.auto_awesome),
+              label: const Text('AI Suggest Species & Notes'),
+            ),
 
             ElevatedButton(
               onPressed: submitPost,
