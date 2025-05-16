@@ -1,4 +1,6 @@
 import 'package:bioscout/pages/create_post_page.dart';
+import 'package:bioscout/pages/profile_page.dart';
+import 'package:bioscout/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/post_provider.dart';
@@ -10,6 +12,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final posts = context.watch<PostProvider>().posts;
+    final currentUser = context.watch<UserProvider>().currentUser;
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
@@ -21,7 +24,19 @@ class HomePage extends StatelessWidget {
         },
         child: Icon(Icons.add),
       ),
-      appBar: AppBar(title: const Text('BioScout Islamabad')),
+      appBar: AppBar(
+        title: const Text('BioScout Islamabad'),
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ProfilePage()),
+            );
+          },
+          child: CircleAvatar(child: Image.network(currentUser.avatarUrl)),
+        ),
+      ),
+
       body:
           posts.isEmpty
               ? const Center(child: Text('No observations yet.'))
