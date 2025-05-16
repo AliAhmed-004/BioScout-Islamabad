@@ -1,7 +1,8 @@
+import 'package:bioscout/pages/create_post_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/post_provider.dart';
-import 'components/post_card.dart';
+import '../components/post_card.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -11,6 +12,15 @@ class HomePage extends StatelessWidget {
     final posts = context.watch<PostProvider>().posts;
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CreatePostPage()),
+          );
+        },
+        child: Icon(Icons.add),
+      ),
       appBar: AppBar(title: const Text('BioScout Islamabad')),
       body:
           posts.isEmpty

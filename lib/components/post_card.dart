@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bioscout/models/post_model.dart';
 import 'package:flutter/material.dart';
 
@@ -6,15 +8,28 @@ class PostCard extends StatelessWidget {
 
   const PostCard({super.key, required this.post});
 
+  bool _isNetworkUrl(String url) {
+    return url.startsWith('http://') || url.startsWith('https://');
+  }
+
   @override
   Widget build(BuildContext context) {
+    Widget imageWidget = const SizedBox();
+
+    if (post.imageUrl.isNotEmpty) {
+      if (_isNetworkUrl(post.imageUrl)) {
+        imageWidget = Image.network(post.imageUrl, fit: BoxFit.cover);
+      } else {
+        imageWidget = Image.file(File(post.imageUrl), fit: BoxFit.cover);
+      }
+    }
+
     return Card(
       margin: const EdgeInsets.all(10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (post.imageUrl.isNotEmpty)
-            Image.network(post.imageUrl, fit: BoxFit.cover),
+          imageWidget,
           Padding(
             padding: const EdgeInsets.all(10),
             child: Column(

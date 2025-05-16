@@ -9,6 +9,7 @@ class PostModel {
   final String imageUrl;
   final String notes;
   final DateTime timestamp;
+  final String userId;
 
   PostModel({
     required this.id,
@@ -19,6 +20,7 @@ class PostModel {
     required this.imageUrl,
     required this.notes,
     required this.timestamp,
+    required this.userId,
   });
 
   factory PostModel.fromMap(Map<String, dynamic> data, String docId) {
@@ -31,6 +33,7 @@ class PostModel {
       imageUrl: data['imageUrl'],
       notes: data['notes'],
       timestamp: (data['timestamp'] as Timestamp).toDate(),
+      userId: '',
     );
   }
 
@@ -43,6 +46,7 @@ class PostModel {
       'imageUrl': imageUrl,
       'notes': notes,
       'timestamp': timestamp,
+      'userId': userId,
     };
   }
 
@@ -54,6 +58,7 @@ class PostModel {
     String location = "Margalla Hills",
     required String imageUrl,
     String notes = "No additional notes.",
+    required String userId, // ✅ add this
   }) {
     return PostModel(
       id: id,
@@ -64,6 +69,7 @@ class PostModel {
       imageUrl: imageUrl,
       notes: notes,
       timestamp: DateTime.now(),
+      userId: userId, // ✅ set here
     );
   }
 }
