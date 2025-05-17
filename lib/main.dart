@@ -20,7 +20,11 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => PostProvider(repository: postRepo)..loadPosts(),
+          create:
+              (_) =>
+                  PostProvider(repository: postRepo)
+                    ..loadPosts()
+                    ..loadMockPosts(),
         ),
         ChangeNotifierProvider(
           create: (_) => UserProvider()..loadMockUser(userId: 'u123'),

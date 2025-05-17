@@ -23,8 +23,8 @@ class UserModel {
     return UserModel(
       id: id,
       name: name ?? 'Observer $id',
-      avatarUrl: avatarUrl ?? 'https://i.pravatar.cc/150?u=$id',
-      postCount: postCount,
+      avatarUrl: avatarUrl ?? 'assets/icons/profile_pic.jpg',
+      postCount: name == 'GreenGuardian' ? 2 : postCount,
       badges: List.from(badges),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:bioscout/models/comment_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:hive/hive.dart';
 
@@ -29,6 +30,12 @@ class PostModel extends HiveObject {
   @HiveField(7)
   final DateTime timestamp;
 
+  @HiveField(9)
+  List<String> likedByUserIds; // ✅ new: list of userIds who liked the post
+
+  @HiveField(10)
+  List<CommentModel> comments; // ✅ new: list of comments
+
   @HiveField(8)
   final String userId;
 
@@ -42,6 +49,8 @@ class PostModel extends HiveObject {
     required this.notes,
     required this.timestamp,
     required this.userId,
+    this.likedByUserIds = const [],
+    this.comments = const [],
   });
 
   factory PostModel.fromMap(Map<String, dynamic> data, String docId) {

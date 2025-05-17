@@ -1,12 +1,11 @@
 import 'package:bioscout/pages/create_post_page.dart';
 import 'package:bioscout/pages/profile_page.dart';
+import 'package:bioscout/pages/rag_chatbot_page.dart';
 import 'package:bioscout/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../ai stuff/rag_chatbot_helper.dart';
 import '../providers/post_provider.dart';
 import '../components/post_card.dart';
-import 'rag_chatbot_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -17,38 +16,34 @@ class HomePage extends StatelessWidget {
     final currentUser = context.watch<UserProvider>().currentUser;
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => CreatePostPage()),
-          );
-        },
-        child: Icon(Icons.add),
-      ),
-      appBar: AppBar(
-        title: const Text('BioScout Islamabad'),
-        actions: [
-          ElevatedButton(
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => const ChatPage()),
+                MaterialPageRoute(builder: (context) => ChatPage()),
               );
             },
-            child: const Text('Open Biodiversity Chatbot'),
+            child: Icon(Icons.chat),
           ),
+          SizedBox(height: 10),
 
-          ElevatedButton(
-            onPressed: () async {
-              final helper = RAGHelper("YOUR_API_KEY");
-              final snippets = await helper.loadAllSnippets();
-              print("=== SNIPPET TEST ===");
-              print(snippets);
+          FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CreatePostPage()),
+              );
             },
-            child: const Text('Test Load Snippets'),
+            child: Icon(Icons.add),
           ),
         ],
+      ),
+      appBar: AppBar(
+        title: const Text('BioScout Islamabad'),
+
         leading: GestureDetector(
           onTap: () {
             Navigator.push(
@@ -56,7 +51,10 @@ class HomePage extends StatelessWidget {
               MaterialPageRoute(builder: (context) => ProfilePage()),
             );
           },
-          child: CircleAvatar(child: Image.network(currentUser.avatarUrl)),
+          child: CircleAvatar(
+            child: Image.asset(currentUser.avatarUrl),
+            radius: 6,
+          ),
         ),
       ),
 

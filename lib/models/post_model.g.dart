@@ -26,13 +26,15 @@ class PostModelAdapter extends TypeAdapter<PostModel> {
       notes: fields[6] as String,
       timestamp: fields[7] as DateTime,
       userId: fields[8] as String,
+      likedByUserIds: (fields[9] as List).cast<String>(),
+      comments: (fields[10] as List).cast<CommentModel>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, PostModel obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(11)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -49,6 +51,10 @@ class PostModelAdapter extends TypeAdapter<PostModel> {
       ..write(obj.notes)
       ..writeByte(7)
       ..write(obj.timestamp)
+      ..writeByte(9)
+      ..write(obj.likedByUserIds)
+      ..writeByte(10)
+      ..write(obj.comments)
       ..writeByte(8)
       ..write(obj.userId);
   }

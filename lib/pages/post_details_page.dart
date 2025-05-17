@@ -12,14 +12,27 @@ class PostDetailsPage extends StatelessWidget {
     return url.startsWith('http://') || url.startsWith('https://');
   }
 
+  bool _isAssetPath(String path) {
+    return path.startsWith('assets/');
+  }
+
   @override
   Widget build(BuildContext context) {
-    final imageWidget =
-        post.imageUrl.isNotEmpty
-            ? (_isNetworkUrl(post.imageUrl)
-                ? Image.network(post.imageUrl)
-                : Image.file(File(post.imageUrl)))
-            : const SizedBox();
+    Widget imageWidget = const SizedBox();
+
+    if (post.imageUrl.isNotEmpty) {
+      final image =
+          _isNetworkUrl(post.imageUrl)
+              ? Image.network(post.imageUrl)
+              : _isAssetPath(post.imageUrl)
+              ? Image.asset(post.imageUrl)
+              : Image.file(File(post.imageUrl));
+
+      imageWidget = ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: SizedBox(height: 200, width: double.infinity, child: image),
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(title: const Text('Post Details')),

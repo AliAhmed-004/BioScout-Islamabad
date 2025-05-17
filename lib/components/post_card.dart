@@ -11,19 +11,25 @@ class PostCard extends StatelessWidget {
 
   const PostCard({super.key, required this.post});
 
-  bool _isNetworkUrl(String url) {
-    return url.startsWith('http://') || url.startsWith('https://');
+  bool _isAssetPath(String path) {
+    return path.startsWith('assets/');
   }
 
   @override
   Widget build(BuildContext context) {
     final user = context.read<UserProvider>().getUserById(post.userId);
 
+    bool _isNetworkUrl(String url) {
+      return url.startsWith('http://') || url.startsWith('https://');
+    }
+
     Widget imageWidget = const SizedBox();
     if (post.imageUrl.isNotEmpty) {
       final image =
           _isNetworkUrl(post.imageUrl)
               ? Image.network(post.imageUrl, fit: BoxFit.cover)
+              : _isAssetPath(post.imageUrl)
+              ? Image.asset(post.imageUrl, fit: BoxFit.cover)
               : Image.file(File(post.imageUrl), fit: BoxFit.cover);
 
       imageWidget = ClipRRect(

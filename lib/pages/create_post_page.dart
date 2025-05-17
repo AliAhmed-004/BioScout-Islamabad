@@ -27,6 +27,24 @@ class _CreatePostPageState extends State<CreatePostPage> {
 
   final AIHelper _aiHelper = AIHelper(geminiApi);
 
+  DateTime? _selectedDate;
+
+  Future<void> _pickDate() async {
+    final now = DateTime.now();
+    final pickedDate = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate ?? now,
+      firstDate: DateTime(now.year - 5),
+      lastDate: now,
+    );
+
+    if (pickedDate != null) {
+      setState(() {
+        _selectedDate = pickedDate;
+      });
+    }
+  }
+
   Future<void> runAISuggestion() async {
     if (_selectedImage == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -71,7 +89,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
 
     final newPost = PostModel.mock(
       id: DateTime.now().millisecondsSinceEpoch.toString(),
-      imageUrl: _selectedImage?.path ?? '', // ✅ Use local path if selected
+      imageUrl: _selectedImage?.path ?? '',
       speciesName:
           speciesController.text.isNotEmpty ? speciesController.text : null,
       aiSuggested: aiSuggested,
@@ -81,6 +99,7 @@ class _CreatePostPageState extends State<CreatePostPage> {
               : 'Margalla Hills',
       notes: notesController.text,
       userId: userId,
+      dateObserved: _selectedDate ?? DateTime.now(), // ✅ use selected date
     );
 
     context.read<PostProvider>().addPost(newPost);
@@ -127,6 +146,17 @@ class _CreatePostPageState extends State<CreatePostPage> {
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Image.file(_selectedImage!, height: 200),
               ),
+
+            ListTile(
+              title: Text(
+                _selectedDate != null
+                    ? 'Observed on: ${_selectedDate!.toLocal().toString().split(' ')[0]}'
+                    : 'Pick Date Observed',
+              ),
+              trailing: const Icon(Icons.calendar_today),
+              onTap: _pickDate,
+            ),
+
             ElevatedButton.icon(
               onPressed: runAISuggestion,
               icon: const Icon(Icons.auto_awesome),

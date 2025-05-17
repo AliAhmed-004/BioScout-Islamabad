@@ -43,6 +43,8 @@ dependencies:
   path_provider:
   csv: ^6.0.0
   flutter_markdown: ^0.7.7+1
+  flutter_speed_dial: ^7.0.0
+  flutter_launcher_icons: ^0.14.3
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +58,11 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   hive_generator:
   build_runner:
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/app_icon.jpeg" # path to your icon image
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -74,6 +81,12 @@ flutter:
     - assets/snippets/2.txt
     - assets/snippets/3.txt
     - assets/snippets/4.txt
+    - assets/icons/profile_pic.jpg
+    - assets/icons/cactus.jpg
+    - assets/icons/orchid.jpg
+    - assets/icons/snake_plant.jpg
+    - assets/icons/app_icon.jpeg
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

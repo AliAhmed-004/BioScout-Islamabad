@@ -1,1 +1,1 @@
-final String geminiApi = 'AIzaSyB8C2LwWZRE3ka4kClk2q_CfKb4sJ99TTA';
+final String geminiApi = 'AIzaSyBMkD2O1X_Ix1rjCrYyGLZN7ubngCQEsNQ';
