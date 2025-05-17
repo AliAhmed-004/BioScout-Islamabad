@@ -1,4 +1,8 @@
+import 'package:bioscout/rag%20helper/rag_helper.dart'
+    show RAGChatBotHelper, RAGHelper;
+import 'package:bioscout/secrets.dart';
 import 'package:flutter/material.dart';
+import '../ai stuff/rag_chatbot_helper.dart';
 import '../hive stuff/post_repository.dart';
 import '../models/post_model.dart'; // adjust path as needed
 
@@ -39,10 +43,12 @@ class PostProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void addPost(PostModel post) async {
+  Future<void> addPost(PostModel post) async {
     await repository.addPost(post);
     _posts.add(post);
-    print('✅ Post saved: ${post.id}');
+
+    final ragHelper = RAGChatBotHelper(geminiApi);
+    await ragHelper.appendPostToDataset(post);
 
     notifyListeners();
   }

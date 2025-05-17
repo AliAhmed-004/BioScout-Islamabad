@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/post_provider.dart';
 import '../components/post_card.dart';
+import 'rag_chatbot_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -26,6 +27,17 @@ class HomePage extends StatelessWidget {
       ),
       appBar: AppBar(
         title: const Text('BioScout Islamabad'),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const ChatPage()),
+              );
+            },
+            child: const Text('Open Biodiversity Chatbot'),
+          ),
+        ],
         leading: GestureDetector(
           onTap: () {
             Navigator.push(

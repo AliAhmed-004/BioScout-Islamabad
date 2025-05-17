@@ -10,6 +10,7 @@ class AIHelper {
     final model = GenerativeModel(model: 'gemini-2.0-flash', apiKey: apiKey);
 
     final imageBytes = await imageFile.readAsBytes();
+
     final content = [
       Content.multi([
         DataPart('image/jpeg', imageBytes),
