@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import '../hive stuff/post_repository.dart';
 import '../models/post_model.dart'; // adjust path as needed
 
 class PostProvider with ChangeNotifier {
+  final PostRepository repository;
   final List<PostModel> _posts = [];
 
   List<PostModel> get posts => _posts;
+
+  PostProvider({required this.repository});
 
   void loadMockPosts() {
     _posts.clear();
@@ -29,8 +33,17 @@ class PostProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void addPost(PostModel post) {
+  Future<void> loadPosts() async {
+    _posts.clear();
+    _posts.addAll(await repository.getAllPosts());
+    notifyListeners();
+  }
+
+  void addPost(PostModel post) async {
+    await repository.addPost(post);
     _posts.add(post);
+    print('✅ Post saved: ${post.id}');
+
     notifyListeners();
   }
 
