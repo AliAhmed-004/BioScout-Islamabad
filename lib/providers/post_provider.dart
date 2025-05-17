@@ -1,8 +1,6 @@
-import 'package:bioscout/rag%20helper/rag_helper.dart'
-    show RAGChatBotHelper, RAGHelper;
+import 'package:bioscout/rag%20helper/rag_helper.dart' show RAGChatBotHelper;
 import 'package:bioscout/secrets.dart';
 import 'package:flutter/material.dart';
-import '../ai stuff/rag_chatbot_helper.dart';
 import '../hive stuff/post_repository.dart';
 import '../models/post_model.dart'; // adjust path as needed
 

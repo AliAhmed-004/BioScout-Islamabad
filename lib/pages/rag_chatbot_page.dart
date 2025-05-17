@@ -1,9 +1,8 @@
-import 'package:bioscout/ai%20stuff/rag_chatbot_helper.dart';
 import 'package:bioscout/secrets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
-import '../rag helper/rag_helper.dart';
+import '../ai stuff/rag_chatbot_helper.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -17,7 +16,7 @@ class _ChatPageState extends State<ChatPage> {
   final List<Map<String, String>> _messages = [];
   bool _loading = false;
 
-  final ragHelper = RAGChatBotHelper(geminiApi);
+  final ragHelper = RAGHelper(geminiApi);
 
   void _sendQuery() async {
     final question = _controller.text.trim();

@@ -3,6 +3,7 @@ import 'package:bioscout/pages/profile_page.dart';
 import 'package:bioscout/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../ai stuff/rag_chatbot_helper.dart';
 import '../providers/post_provider.dart';
 import '../components/post_card.dart';
 import 'rag_chatbot_page.dart';
@@ -36,6 +37,16 @@ class HomePage extends StatelessWidget {
               );
             },
             child: const Text('Open Biodiversity Chatbot'),
+          ),
+
+          ElevatedButton(
+            onPressed: () async {
+              final helper = RAGHelper("YOUR_API_KEY");
+              final snippets = await helper.loadAllSnippets();
+              print("=== SNIPPET TEST ===");
+              print(snippets);
+            },
+            child: const Text('Test Load Snippets'),
           ),
         ],
         leading: GestureDetector(
